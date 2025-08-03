@@ -22,10 +22,12 @@ public class JpaMain {
 
         try {
             /* Create
+            //비영속
             Member member = new Member();
             member.setId(2L);
             member.setName("2Name");
 
+            //영속
             em.persist(member);
             */
 
