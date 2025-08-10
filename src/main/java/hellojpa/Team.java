@@ -6,17 +6,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity
-public class Member {
+public class Team {
 
     @Id @GeneratedValue
-    @Column(name = "MEMBER_ID")
+    @Column(name = "TEAM_ID")
     private Long id;
 
-    @Column(name = "USERNAME")
     private String name;
-
-    @Column(name = "TEAM_ID")
-    private Long teamId;
 
     public Long getId() {
         return id;
@@ -32,13 +28,5 @@ public class Member {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Long getTeamId() {
-        return teamId;
-    }
-
-    public void setTeamId(Long teamId) {
-        this.teamId = teamId;
     }
 }

@@ -5,8 +5,6 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
-import java.util.List;
-
 public class JpaMain {
 
     public static void main(String[] args) {
@@ -21,28 +19,19 @@ public class JpaMain {
         tx.begin();
 
         try {
-            /* Create
-            //비영속
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team);
+
             Member member = new Member();
-            member.setId(2L);
-            member.setName("2Name");
-
-            //영속
+            member.setName("member1");
+            member.setTeamId(team.getId());
             em.persist(member);
-            */
 
-            /* Update
-            //JPA 를 통해서 객체를 가져오면 persist 할 필요가 없다.
-            Member findMember = em.find(Member.class, 1L);
-            findMember.setName("Name1");
-            */
+            Member findMember = em.find(Member.class, member.getId());
 
-            List<Member> result = em.createQuery("select m from Member as m", Member.class)
-                    .getResultList();
-
-            for(Member member : result) {
-                System.out.println("member.name = " + member.getName());
-            }
+            Long findTeamId = findMember.getTeamId();
+            Team findTeam = em.find(Team.class, findTeamId);
 
             tx.commit();
         } catch (Exception e) {
