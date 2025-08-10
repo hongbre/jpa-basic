@@ -27,8 +27,19 @@ public class JpaMain {
 
             Member member = new Member();
             member.setName("member1");
-            member.setTeam(team);
+            member.changeTeam(team);
             em.persist(member);
+
+            /*
+            * team 에 member 를 add 하지 않고,
+            * 밑에 flush 와 clear 를 주석처리하면
+            * members 의 출력이 아무것도 되지 않는다.
+            * add: O, flush/clear: O -> 출력 O
+            * add: O, flush/clear: X -> 출력 O
+            * add: X, flush/clear: O -> 출력 O
+            * add: X, flush/clear: X -> 출력 X
+            */
+            //team.getMembers().add(member);
 
             em.flush();
             em.clear();
@@ -36,9 +47,11 @@ public class JpaMain {
             Member findMember = em.find(Member.class, member.getId());
             List<Member> members = findMember.getTeam().getMembers();
 
+            System.out.println("==========");
             for (Member m : members) {
                 System.out.println("m = " + m.getName());
             }
+            System.out.println("==========");
 
             tx.commit();
         } catch (Exception e) {
